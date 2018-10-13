@@ -1,0 +1,420 @@
+guid: 00000000-0000-0000-0000-000000000000
+images:
+  - image01.png
+  - image02.png
+  - image03.png
+  - image04.png
+  - image05.png
+  - image06.png
+  - image07.png
+  - image08.png
+  - image09.png
+  - image10.png
+  - image11.png
+  - image12.png
+iscalib: true
+calibradius: 0.25
+calibspacing: 1
+mmperpixel: 0.00340767971418
+calib: ""
+crop: [0, 0, 0, 0]
+cameratostage: []
+annotations: 
+  - type: GridCircle
+    name: Circle
+    gx: 6
+    gy: 4
+    id: 822606072
+    r: 72.4637681159
+    x: 294.984634948
+    y: 1852.03150552
+  - type: GridCircle
+    name: Circle
+    gx: 6
+    gy: 3
+    id: 106335164
+    r: 72.4637681159
+    x: 588.393593079
+    y: 1857.21882399
+  - type: GridCircle
+    name: Circle
+    gx: 6
+    gy: 2
+    id: 970318794
+    r: 72.4637681159
+    x: 881.80255121
+    y: 1862.40614246
+  - type: GridCircle
+    name: Circle
+    gx: 6
+    gy: 1
+    id: 1549337139
+    r: 72.4637681159
+    x: 1175.21150934
+    y: 1867.59346093
+  - type: GridCircle
+    name: Circle
+    gx: 6
+    gy: 0
+    id: 142039715
+    r: 72.4637681159
+    x: 1468.62046747
+    y: 1872.78077939
+  - type: GridCircle
+    name: Circle
+    gx: 6
+    gy: -1
+    id: 8600141
+    r: 72.4637681159
+    x: 1762.0294256
+    y: 1877.96809786
+  - type: GridCircle
+    name: Circle
+    gx: 6
+    gy: -2
+    id: 468831664
+    r: 72.4637681159
+    x: 2055.43838373
+    y: 1883.15541633
+  - type: GridCircle
+    name: Circle
+    gx: 6
+    gy: -3
+    id: 1841450302
+    r: 72.4637681159
+    x: 2348.84734186
+    y: 1888.3427348
+  - type: GridCircle
+    name: Circle
+    gx: 5
+    gy: 4
+    id: 1828117325
+    r: 72.4637681159
+    x: 300.273255892
+    y: 1558.52944229
+  - type: GridCircle
+    name: Circle
+    gx: 5
+    gy: 3
+    id: 1561882633
+    r: 72.4637681159
+    x: 593.682214023
+    y: 1563.71676076
+  - type: GridCircle
+    name: Circle
+    gx: 5
+    gy: 2
+    id: 359701592
+    r: 72.4637681159
+    x: 887.091172153
+    y: 1568.90407922
+  - type: GridCircle
+    name: Circle
+    gx: 5
+    gy: 1
+    id: 1224306418
+    r: 72.4637681159
+    x: 1180.50013028
+    y: 1574.09139769
+  - type: GridCircle
+    name: Circle
+    gx: 5
+    gy: 0
+    id: 118172329
+    r: 72.4637681159
+    x: 1473.90908841
+    y: 1579.27871616
+  - type: GridCircle
+    name: Circle
+    gx: 5
+    gy: -1
+    id: 1312175299
+    r: 72.4637681159
+    x: 1767.31804655
+    y: 1584.46603463
+  - type: GridCircle
+    name: Circle
+    gx: 5
+    gy: -2
+    id: 1967050491
+    r: 72.4637681159
+    x: 2060.72700468
+    y: 1589.6533531
+  - type: GridCircle
+    name: Circle
+    gx: 5
+    gy: -3
+    id: 1621874278
+    r: 72.4637681159
+    x: 2354.13596281
+    y: 1594.84067157
+  - type: GridCircle
+    name: Circle
+    gx: 4
+    gy: 3
+    id: 1212790033
+    r: 72.4637681159
+    x: 598.970834966
+    y: 1270.21469752
+  - type: GridCircle
+    name: Circle
+    gx: 4
+    gy: 2
+    id: 1550599583
+    r: 72.4637681159
+    x: 892.379793097
+    y: 1275.40201599
+  - type: GridCircle
+    name: Circle
+    gx: 4
+    gy: 1
+    id: 1563866363
+    r: 72.4637681159
+    x: 1185.78875123
+    y: 1280.58933446
+  - type: GridCircle
+    name: Circle
+    gx: 4
+    gy: 0
+    id: 611363520
+    r: 72.4637681159
+    x: 1479.19770936
+    y: 1285.77665293
+  - type: GridCircle
+    name: Circle
+    gx: 4
+    gy: -2
+    id: 158916920
+    r: 72.4637681159
+    x: 2066.01562562
+    y: 1296.15128987
+  - type: GridCircle
+    name: Circle
+    gx: 3
+    gy: 4
+    id: 1437955413
+    r: 72.4637681159
+    x: 310.850497779
+    y: 971.52531582
+  - type: GridCircle
+    name: Circle
+    gx: 3
+    gy: 3
+    id: 468465889
+    r: 72.4637681159
+    x: 604.25945591
+    y: 976.712634289
+  - type: GridCircle
+    name: Circle
+    gx: 3
+    gy: 2
+    id: 1731272568
+    r: 72.4637681159
+    x: 897.668414041
+    y: 981.899952757
+  - type: GridCircle
+    name: Circle
+    gx: 3
+    gy: 1
+    id: 1006587560
+    r: 72.4637681159
+    x: 1191.07737217
+    y: 987.087271226
+  - type: GridCircle
+    name: Circle
+    gx: 3
+    gy: 0
+    id: 2111493180
+    r: 72.4637681159
+    x: 1484.4863303
+    y: 992.274589695
+  - type: GridCircle
+    name: Circle
+    gx: 3
+    gy: -2
+    id: 1709914223
+    r: 72.4637681159
+    x: 2071.30424656
+    y: 1002.64922663
+  - type: GridCircle
+    name: Circle
+    gx: 2
+    gy: 3
+    id: 1528693030
+    r: 72.4637681159
+    x: 609.548076854
+    y: 683.210571055
+  - type: GridCircle
+    name: Circle
+    gx: 2
+    gy: 2
+    id: 1399541006
+    r: 72.4637681159
+    x: 902.957034984
+    y: 688.397889524
+  - type: GridCircle
+    name: Circle
+    gx: 2
+    gy: 1
+    id: 1083463579
+    r: 72.4637681159
+    x: 1196.36599311
+    y: 693.585207993
+  - type: GridCircle
+    name: Circle
+    gx: 2
+    gy: 0
+    id: 1988826268
+    r: 72.4637681159
+    x: 1489.77495125
+    y: 698.772526461
+  - type: GridCircle
+    name: Circle
+    gx: 2
+    gy: -1
+    id: 910897051
+    r: 72.4637681159
+    x: 1783.18390938
+    y: 703.95984493
+  - type: GridCircle
+    name: Circle
+    gx: 1
+    gy: 4
+    id: 1594358091
+    r: 72.4637681159
+    x: 321.427739667
+    y: 384.521189353
+  - type: GridCircle
+    name: Circle
+    gx: 1
+    gy: 3
+    id: 320548717
+    r: 72.4637681159
+    x: 614.836697797
+    y: 389.708507822
+  - type: GridCircle
+    name: Circle
+    gx: 1
+    gy: 2
+    id: 409052083
+    r: 72.4637681159
+    x: 908.245655928
+    y: 394.895826291
+  - type: GridCircle
+    name: Circle
+    gx: 1
+    gy: 1
+    id: 506484144
+    r: 72.4637681159
+    x: 1201.65461406
+    y: 400.083144759
+  - type: GridCircle
+    name: Circle
+    gx: 1
+    gy: 0
+    id: 1063007057
+    r: 72.4637681159
+    x: 1495.06357219
+    y: 405.270463228
+  - type: GridCircle
+    name: Circle
+    gx: 1
+    gy: -1
+    id: 879025243
+    r: 72.4637681159
+    x: 1788.47253032
+    y: 410.457781697
+  - type: GridCircle
+    name: Circle
+    gx: 1
+    gy: -2
+    id: 1860598604
+    r: 72.4637681159
+    x: 2081.88148845
+    y: 415.645100165
+  - type: GridCircle
+    name: Circle
+    gx: 0
+    gy: 4
+    id: 663322376
+    r: 72.4637681159
+    x: 326.71636061
+    y: 91.0191261201
+  - type: GridCircle
+    name: Circle
+    gx: 0
+    gy: 3
+    id: 1254346000
+    r: 72.4637681159
+    x: 620.125318741
+    y: 96.2064445887
+  - type: GridCircle
+    name: Circle
+    gx: 0
+    gy: 2
+    id: 622211534
+    r: 72.4637681159
+    x: 913.534276872
+    y: 101.393763057
+  - type: GridCircle
+    name: Circle
+    gx: 0
+    gy: 1
+    id: 1844152862
+    r: 72.4637681159
+    x: 1206.943235
+    y: 106.581081526
+  - type: GridCircle
+    name: Circle
+    gx: 0
+    gy: 0
+    id: 1001959098
+    r: 72.4637681159
+    x: 1500.35219313
+    y: 111.768399995
+  - type: GridCircle
+    name: Circle
+    gx: 0
+    gy: -1
+    id: 1956177487
+    r: 72.4637681159
+    x: 1793.76115126
+    y: 116.955718463
+  - type: GridCircle
+    name: Circle
+    gx: 0
+    gy: -2
+    id: 1714219256
+    r: 72.4637681159
+    x: 2087.17010939
+    y: 122.143036932
+camera: 
+    autoexposure: false
+    autoframerate: false
+    autogain: false
+    autogamma: false
+    autosharpness: false
+    autoshutter: false
+    camera_name: FlyCapture
+    cameratype: FlyCapture
+    format_ix: 0
+    framerate: 39.8980484009
+    gain: 0
+    gamma: 1
+    mode_ix: 0
+    pixelformat_ix: 4194304
+    roih: 2048
+    roiw: 2448
+    roix: 0
+    roiy: 0
+    sharpness: 0
+    shutter: 25.0008106232
+device: 
+    devicetype: OEM
+    lights: [true, true, true, true, true, true, true, true, true, true, true, true]
+    version: 220
+stage: 
+    posx: 98282
+    posy: 60415
+    posz: 77026
+    stagetype: MicroXAM-800

@@ -1,0 +1,60 @@
+guid: 6c6da7af-0200-00e9-0100-00000000000e
+images:
+  - image07.png
+  - image08.png
+  - image09.png
+  - image10.png
+  - image11.png
+  - image12.png
+iscalib: false
+calibradius: 0
+calibspacing: 0
+mmperpixel: 0.00340381366286
+calib: E:/Accuracy/Rubert513/Gel20160607-002/model-d493-dome.yaml
+crop: [0, 0, 0, 0]
+cameratostage: []
+annotations: 
+  - type: Line
+    name: Line
+    id: 2005817696
+    x1: 323.046617261
+    x2: 1497.95425804
+    y1: 982.632979323
+    y2: 997.365109133
+  - type: Line
+    name: Guide
+    id: 1989418913
+    x1: 917.999723103
+    x2: 902.000022357
+    y1: 398.000635223
+    y2: 1673.9988038
+camera: 
+    autoexposure: false
+    autoframerate: false
+    autogain: false
+    autogamma: false
+    autosharpness: false
+    autoshutter: false
+    camera_name: FlyCapture
+    cameratype: FlyCapture
+    format_ix: 0
+    framerate: 39.8980484009
+    gain: 0
+    gamma: 1
+    mode_ix: 0
+    pixelformat_ix: 4194304
+    roih: 2048
+    roiw: 2448
+    roix: 0
+    roiy: 0
+    sharpness: 0
+    shutter: 25.0008106232
+device: 
+    devicetype: OEM
+    lights: [true, true, true, true, true, true, true, true, true, true, true, true]
+    version: 220
+stage: 
+    posx: 102197
+    posy: 58216
+    posz: 78922
+    stagetype: MicroXAM-800
