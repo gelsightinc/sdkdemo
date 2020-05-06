@@ -10,7 +10,7 @@ iscalib: false
 calibradius: 0
 calibspacing: 0
 mmperpixel: 0.00340381366286
-calib: E:/Accuracy/Rubert513/Gel20160607-002/model-d493-dome.yaml
+calib: ""
 crop: [0, 0, 0, 0]
 cameratostage: []
 annotations: 

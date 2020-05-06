@@ -16,6 +16,27 @@ find_path (GS_INCLUDE
     DOC "GelSightSdk include path"
 )
 
+# Library paths in SDK are different for Windows vs Linux
+if (WIN32)
+
+find_library (GS_LIB1
+    NAMES gscore_v142
+    PATHS "${gspath}/x64/Release/v142"
+)
+
+find_library (GS_LIB2
+    NAMES gsanalysis_v142
+    PATHS "${gspath}/x64/Release/v142"
+)
+
+set(GS_BIN "${gspath}/x64/Release/v142")
+
+endif (WIN32)
+
+#
+# Linux
+if (UNIX)
+
 find_library (GS_LIB1
     NAMES gscore
     PATHS "${gspath}/lib"
@@ -26,6 +47,9 @@ find_library (GS_LIB2
     PATHS "${gspath}/lib"
 )
 
+set(GS_BIN "${gspath}/bin")
+endif (UNIX)
+
 
 
 include(FindPackageHandleStandardArgs)
@@ -34,7 +58,7 @@ FIND_PACKAGE_HANDLE_STANDARD_ARGS(GelSightSdk DEFAULT_MSG GS_LIB1 GS_LIB2 GS_INC
 if(GelSightSdk_FOUND)
     set(GelSightSdk_INCLUDE_DIRS ${GS_INCLUDE})
     set(GelSightSdk_LIBRARIES ${GS_LIB1} ${GS_LIB2})
-    set(GelSightSdk_BIN "${gspath}/bin")
+    set(GelSightSdk_BIN ${GS_BIN})
 endif()
 
     

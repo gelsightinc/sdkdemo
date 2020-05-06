@@ -31,14 +31,14 @@ using std::endl;
 using std::vector;
 
 
-
+// Path to testdata
+string setpath("../testdata/");
 
 /*
  * Run pstereo algorithm on sine wave sample data
  */
 int runpstereo(gs::PhotometricStereo *pstereo)
 {
-	string setpath("../../testdata/");
 	string scanfile = setpath + "R513-500/scan.yaml";
 
 	cout << "Running photometric stereo algorithm on " << scanfile << endl;
@@ -63,13 +63,13 @@ int runpstereo(gs::PhotometricStereo *pstereo)
 	auto heightmap = poisson->integrateNormalMap(nrm, pstereo->resolution());
 
 	// Save surface as TMD
-	string out1 = setpath + "R513-1000/output.tmd";
+	string out1 = setpath + "R513-500/output.tmd";
 	cout << "Saving heightmap: " << out1 << endl;
 	gs::util::WriteTMD(out1, heightmap, pstereo->resolution(), 0.0, 0.0);
 
 
 	// Save normal map
-	string out2 = setpath + "R513-1000/output_nrm.png";
+	string out2 = setpath + "R513-500/output_nrm.png";
 	cout << "Saving normal map: " << out2 << endl;
 	gs::util::WriteNormalMap(out2, nrm, 16);
 
@@ -82,14 +82,12 @@ int runpstereo(gs::PhotometricStereo *pstereo)
  */
 int runsavedcalib()
 {
-	string setpath("../../testdata/");
 
 	auto modelfile = setpath + "model-dome.yaml";
 	cout << "Loading saved calibration data: " << modelfile << endl;
 	// Load PhotometricStereo algorithm from settings file
 	
 	try {
-
 		auto pstereo = gs::LoadPhotometricStereo(modelfile);
 
         // Run pstereo algorithm on a scan
@@ -109,7 +107,6 @@ int runsavedcalib()
  */
 int runcalibration()
 {
-	string setpath("../../testdata/");
 
 	// Create list of calibration targets
     std::vector<std::shared_ptr<gs::CalibrationTarget>> targets;
@@ -117,14 +114,15 @@ int runcalibration()
     // We have 4 scans of the calibration target at different positions
     // we will add them all to the list of calibration targets
     for (int i = 0; i < 4; ++i) {
-        auto scanfolder = setpath + "BGA-00" + std::to_string(i+1);
-        auto target     = std::make_shared<gs::BgaTarget>(scanfolder);
+        auto scanfolder = fs::canonicalize(setpath + "BGA-00" + std::to_string(i+1));
+        auto target     = gs::BgaTarget::create(scanfolder);
         targets.push_back(target);
     }
 
     // It's recommended, but not required, to add a scan of a flat plate to the 
     // list of calibration targets
-    auto flat = std::make_shared<gs::FlatTarget>(setpath + "Flat-001");
+	auto flatp = fs::canonicalize(setpath + "Flat-001");
+    auto flat = gs::FlatTarget::create(flatp);
     targets.push_back(flat);
 
 	auto start = std::chrono::system_clock::now();
@@ -150,7 +148,6 @@ int runcalibration()
  */
 vector<string> doscan(const string& foldername)
 {
-	string setpath("../../testdata/");
 	string calibdir = setpath + "calib";
 	
 	vector<string> paths;
@@ -161,47 +158,31 @@ vector<string> doscan(const string& foldername)
 }
 
 /*
- * This function shows how to calibrate the system from lists of image
- * paths
+ * This function shows how to calibrate the system from folders of BGA scans
  */
 void runCalibrationFromImagePaths()
 {
+//	const double pitchmm  = 0.4;
+//	const double radiusmm = 0.15625;
+	const double resolution = 0.007812500000000002;
+
 	// List of BGA Targets
 	std::vector<std::shared_ptr<gs::CalibrationTarget>> targets;
 	for (int i = 0; i < 4; ++i) {
-
-		// Get image paths for a new scan
-		auto paths = doscan("calib" + std::to_string(i+1));
-
-		// Create scan object for thes image paths
-		auto scan = gs::CreateScan(paths);
-
-		// Set BGA parameters - pitch (spacing) and radius
-		scan->setCalibDimensions(0.4, 0.15625);
-
-		// Set resolution
-		scan->setResolution(0.007812500000000002, gs::Unit::MM);
-
-		// Save the scan file as YAML format
-		auto scanp = string("../../testdata/calib") + "/scan" + std::to_string(i+1) + ".yaml";
-		scan->save(scanp, gs::Format::YAML);
+		// Path to scan folder
+		auto scanp = string("../../../testdata/BGA-00") + std::to_string(i+1);
 
 		// Now create BGAs from scans
-		// Create list of calibration targets
-		auto target = std::make_shared<gs::BgaTarget>(string("../../testdata/calib"));
+		auto target = gs::BgaTarget::create( scanp );
 
 		targets.push_back(target);
 	}
 
-
 	cout << "Run calibration algorithm..." << endl;
-    auto pstereo = gs::CalibratePhotometricStereo(targets, 0.007812500000000002, gs::Version());
-
+    auto pstereo = gs::CalibratePhotometricStereo(targets, resolution, gs::Version());
 
 	// Save calibration file as model.yaml
-	pstereo->save("../../testdata/testmodel.yaml", gs::Format::YAML);
-
-
+	pstereo->save("../../../testdata/testmodel.yaml", gs::Format::YAML);
 }
 
 
