@@ -63,8 +63,8 @@ for %%C in  (
                 REM Copy dlls
 
                 set SDIR=!GS_SDK!\%%P\%%C\%%T
-                xcopy /D/I/Y !SDIR!\*.dll !OUTDIR!
-				xcopy /D/I/Y !SDIR!\*.pdb !OUTDIR!
+                xcopy /D/I/Y "!SDIR!\*.dll" "!OUTDIR!"
+				xcopy /D/I/Y "!SDIR!\*.pdb" "!OUTDIR!"
        
             )
 
