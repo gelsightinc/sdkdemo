@@ -23,8 +23,11 @@ if (UNIX)
 
 #
 # C++ Filesystem 
-add_library(stdc++fs UNKNOWN IMPORTED)
-set_property(TARGET stdc++fs PROPERTY IMPORTED_LOCATION "/usr/lib/gcc/x86_64-linux-gnu/7/libstdc++fs.a")
+#
+# this should be found automatically depends on c++ version
+#add_library(stdc++fs UNKNOWN IMPORTED)
+#set_property(TARGET stdc++fs PROPERTY IMPORTED_LOCATION "/usr/lib/gcc/x86_64-linux-gnu/7/libstdc++fs.a")
+#
 target_link_libraries(demo stdc++fs)
 
 endif (UNIX)
