@@ -1,0 +1,250 @@
+images:
+  - image01.png
+guid: bd3763f4-7629-4fde-b26c-92d1b30e1172
+mmperpixel: 0.0295297735479
+calib: ..\model.yaml
+crop: [0, 0, 0, 0]
+cameratostage: []
+aligned: false
+createdon: 2021-02-04 18:37:06
+activeheightmap: scan0011.tmd
+activenormalmap: scan0011_nrm.png
+annotations: 
+  - type: GridCircle
+    name: Circle.4
+    gx: 0
+    gy: 0
+    id: 872384275
+    r: 66.4604110718
+    regions: []
+    x: 921
+    y: 414
+  - type: GridCircle
+    name: Circle.75
+    gx: 1
+    gy: 0
+    id: 1398652177
+    r: 66.4604110718
+    regions: []
+    x: 925
+    y: 629
+  - type: GridCircle
+    name: Circle.7
+    gx: 2
+    gy: 0
+    id: 773509879
+    r: 66.4604110718
+    regions: []
+    x: 929.289803505
+    y: 849.719238281
+  - type: GridCircle
+    name: Circle.8
+    gx: 3
+    gy: 0
+    id: 202214095
+    r: 72.1506652832
+    regions: []
+    x: 936
+    y: 1069
+  - type: GridCircle
+    name: Circle.9
+    gx: 4
+    gy: 0
+    id: 1322939555
+    r: 56.4111213684
+    regions: []
+    x: 933.382677078
+    y: 1287.42712402
+  - type: GridCircle
+    name: Circle.11
+    gx: 0
+    gy: -1
+    id: 1792956834
+    r: 66.4604110718
+    regions: []
+    x: 705.646881104
+    y: 420.296842098
+  - type: GridCircle
+    name: Circle.13
+    gx: 1
+    gy: -1
+    id: 2064774833
+    r: 66.4604110718
+    regions: []
+    x: 710.018253803
+    y: 637.577344418
+  - type: GridCircle
+    name: Circle.14
+    gx: 2
+    gy: -1
+    id: 1533613203
+    r: 66.4604110718
+    regions: []
+    x: 714.389626503
+    y: 854.857846737
+  - type: GridCircle
+    name: Circle.15
+    gx: 3
+    gy: -1
+    id: 251959681
+    r: 66.4604110718
+    regions: []
+    x: 718.760999203
+    y: 1072.13834906
+  - type: GridCircle
+    name: Circle.39
+    gx: 5
+    gy: -4
+    id: 440271982
+    r: 66.4604110718
+    regions: []
+    x: 82.8032135963
+    y: 1522.11517906
+  - type: GridCircle
+    name: Circle.40
+    gx: 0
+    gy: 1
+    id: 1583101711
+    r: 66.4604110718
+    regions: []
+    x: 1135.44723511
+    y: 410.019625187
+  - type: GridCircle
+    name: Circle.42
+    gx: 1
+    gy: 1
+    id: 1676399308
+    r: 66.4604110718
+    regions: []
+    x: 1139.81860781
+    y: 627.300127506
+  - type: GridCircle
+    name: Circle.43
+    gx: 2
+    gy: 1
+    id: 550913758
+    r: 66.4604110718
+    regions: []
+    x: 1144.18998051
+    y: 844.580629826
+  - type: GridCircle
+    name: Circle.44
+    gx: 3
+    gy: 1
+    id: 1647717207
+    r: 66.4604110718
+    regions: []
+    x: 1148.56135321
+    y: 1061.86113214
+  - type: GridCircle
+    name: Circle.45
+    gx: 4
+    gy: 1
+    id: 1268103068
+    r: 54.8162956238
+    regions: []
+    x: 1153.61946297
+    y: 1281.27702761
+  - type: GridCircle
+    name: Circle.47
+    gx: 0
+    gy: 2
+    id: 1849105443
+    r: 67.4583969116
+    regions: []
+    x: 1351
+    y: 406
+  - type: GridCircle
+    name: Circle.49
+    gx: 1
+    gy: 2
+    id: 387137285
+    r: 66.4604110718
+    regions: []
+    x: 1355
+    y: 621
+  - type: GridCircle
+    name: Circle.50
+    gx: 2
+    gy: 2
+    id: 2136377074
+    r: 66.4604110718
+    regions: []
+    x: 1359.09015751
+    y: 839.44202137
+  - type: GridCircle
+    name: Circle.51
+    gx: 3
+    gy: 2
+    id: 813093908
+    r: 66.4604110718
+    regions: []
+    x: 1363.46153021
+    y: 1056.72252369
+  - type: GridCircle
+    name: Circle.52
+    gx: 4
+    gy: 2
+    id: 1837124341
+    r: 55.1069450378
+    regions: []
+    x: 1370.85624886
+    y: 1268.12693119
+  - type: GridCircle
+    name: Circle.54
+    gx: 0
+    gy: 3
+    id: 1810204731
+    r: 52.2969436646
+    regions: []
+    x: 1566
+    y: 402
+  - type: GridCircle
+    name: Circle.56
+    gx: 1
+    gy: 3
+    id: 436626428
+    r: 65.3090362549
+    regions: []
+    x: 1566
+    y: 618
+  - type: GridCircle
+    name: Circle.57
+    gx: 2
+    gy: 3
+    id: 413304662
+    r: 66.4604110718
+    regions: []
+    x: 1573.99033451
+    y: 834.303412914
+target: 
+    type: bga
+    circles: [872384275, 1398652177, 773509879, 202214095, 1322939555, 1792956834, 2064774833, 1533613203, 251959681, 440271982, 1583101711, 1676399308, 550913758, 1647717207, 1268103068, 1849105443, 387137285, 2136377074, 813093908, 1837124341, 1810204731, 436626428, 413304662]
+    pitch: 6.35
+    radius: 1.5875
+camera: 
+    autoexposure: false
+    autoframerate: false
+    autogain: false
+    autogamma: false
+    autosharpness: false
+    autoshutter: false
+    camera_name: Ximea
+    cameraid: CECAF2049001
+    cameratype: Ximea
+    format_ix: 0
+    framerate: 55
+    gain: 0
+    gamma: 1
+    mode_ix: 0
+    pixelformat_ix: 2
+    roih: 1544
+    roiw: 2064
+    roix: 0
+    roiy: 0
+    sharpness: 0
+    shutter: 2.005
+device: 
+    devicetype: Finger
+    lights: []
+    version: 2

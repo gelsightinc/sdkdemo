@@ -1,0 +1,46 @@
+images:
+  - image01.png
+guid: 9e7010bd-6443-4ec1-b097-96a85638a384
+mmperpixel: 0
+calib: ""
+crop: [401, 115, 1366, 985]
+cameratostage: []
+aligned: false
+createdon: 2021-02-04 18:37:39
+annotations: 
+  - type: Rectangle
+    name: Rectangle.363
+    h: 985.450727464
+    id: 879695311
+    regions: []
+    w: 1366.43167842
+    x: 365.981700915
+    y: 170.991450427
+target: 
+    type: flat
+camera: 
+    autoexposure: false
+    autoframerate: false
+    autogain: false
+    autogamma: false
+    autosharpness: false
+    autoshutter: false
+    camera_name: Ximea
+    cameraid: CECAF2049001
+    cameratype: Ximea
+    format_ix: 0
+    framerate: 55
+    gain: 0
+    gamma: 1
+    mode_ix: 0
+    pixelformat_ix: 2
+    roih: 1544
+    roiw: 2064
+    roix: 0
+    roiy: 0
+    sharpness: 0
+    shutter: 2.005
+device: 
+    devicetype: Finger
+    lights: []
+    version: 2
