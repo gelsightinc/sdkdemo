@@ -1,0 +1,35 @@
+images:
+  - image01.png
+guid: 6bf7ecb4-9233-4df4-8528-ccb3413c1f6b
+mmperpixel: 0
+calib: ""
+crop: [0, 0, 0, 0]
+cameratostage: []
+aligned: false
+createdon: 2021-02-08 15:04:01
+camera: 
+    autoexposure: false
+    autoframerate: false
+    autogain: false
+    autogamma: false
+    autosharpness: false
+    autoshutter: false
+    camera_name: Ximea
+    cameraid: CECAF2049004
+    cameratype: Ximea
+    format_ix: 0
+    framerate: 55
+    gain: 0
+    gamma: 1
+    mode_ix: 0
+    pixelformat_ix: 2
+    roih: 1544
+    roiw: 2064
+    roix: 0
+    roiy: 0
+    sharpness: 0
+    shutter: 5.002
+device: 
+    devicetype: Finger
+    lights: []
+    version: 2
