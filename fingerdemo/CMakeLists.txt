@@ -10,13 +10,14 @@ PRIVATE
     "${CMAKE_CURRENT_LIST_DIR}/fingerdemo.cpp"
 )
 
+find_package(OpenCV REQUIRED )
 
 #
 # demo depends on gelsightsdk and gslicense
 #
 find_package(GelSightSdk REQUIRED)
-include_directories(fingerdemo ${GelSightSdk_INCLUDE_DIRS})
-target_link_libraries(fingerdemo ${GelSightSdk_LIBRARIES})
+include_directories(fingerdemo ${GelSightSdk_INCLUDE_DIRS} ${OpenCV_INCLUDES})
+target_link_libraries(fingerdemo ${GelSightSdk_LIBRARIES} ${OpenCV_LIBRARIES})
 
 
 if (UNIX)
