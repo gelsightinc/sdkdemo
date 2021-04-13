@@ -18,6 +18,11 @@ find_package(GelSightSdk REQUIRED)
 include_directories(demo ${GelSightSdk_INCLUDE_DIRS})
 target_link_libraries(demo ${GelSightSdk_LIBRARIES})
 
+#
+# Link to libpng
+find_package(PNG REQUIRED)
+target_link_libraries(demo ${PNG_LIBRARY})
+target_link_libraries(demo uuid)
 
 if (UNIX)
 

@@ -19,6 +19,11 @@ find_package(GelSightSdk REQUIRED)
 include_directories(fingerdemo ${GelSightSdk_INCLUDE_DIRS} ${OpenCV_INCLUDES})
 target_link_libraries(fingerdemo ${GelSightSdk_LIBRARIES} ${OpenCV_LIBRARIES})
 
+#
+# Link to libpng
+find_package(PNG REQUIRED)
+target_link_libraries(fingerdemo ${PNG_LIBRARY})
+target_link_libraries(fingerdemo uuid)
 
 if (UNIX)
 
