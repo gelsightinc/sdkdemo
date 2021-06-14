@@ -274,7 +274,7 @@ int main(int argc, char *argv[])
 	// IMPORTANT: Must call gsSdkInitialize() before using the SDK
 	//
 	try {
-		gsSdkInitialize();
+		gsSdkInitializeEx();
 		gs::Version();
 	} catch(std::exception& ex) {
 		std::cerr << "first try catch " << ex.what() << endl;
