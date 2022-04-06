@@ -1,13 +1,13 @@
 // fingerdemo.cpp
 //
 // This file contains functions that demonstrate the basic functionality of GelSightSDK
-// 
+//
 // demo functions:
-//     
+//
 //     runcalibration         Calibrate the system from one or more BGA scans
 //     runsavedcalib          Load a saved calibration file and run the 3D algorithms
-// 
-// Kimo Johnson  
+//
+// Kimo Johnson
 // Last Revision: 2/5/2017
 //
 //
@@ -45,8 +45,7 @@ int runpstereo(gs::PhotometricStereo *pstereo)
   cout << "Running photometric stereo algorithm on " << scanfile << endl;
 
   // Load a scan from the scan file
-	
-  auto scan = gs::LoadScanFromYAML(scanfile, gs::DefaultAnalysisManager());
+  auto scan = gs::LoadScanFromYaml(scanfile);
 
   // Load images from scan
   auto images = gs::util::LoadImages(scan->imagePaths());
@@ -57,7 +56,7 @@ int runpstereo(gs::PhotometricStereo *pstereo)
 
   // Important to only compute 3D data with a specified crop region
   gs::RectI croproi(300,500,1000,1250);
-  
+
   // Do surface normal reconstruction
   auto nrm = pstereo->linearNormalMap(images, croproi);
 
@@ -108,7 +107,7 @@ int runcalibration()
 {
 
     // Create list of calibration targets
-    std::vector<std::shared_ptr<gs::CalibrationTarget>> targets;
+    gs::CalibrationTargets targets;
 
     // We have 3 scans of the calibration target at different positions
     // we will add them all to the list of calibration targets
@@ -119,18 +118,18 @@ int runcalibration()
     }
 
     auto start = std::chrono::system_clock::now();
-	
+
     cout << "Running calibration algorithm..." << endl;
 
     auto pstereo = gs::CalibratePhotometricStereo(targets, gs::Version());
 
     std::chrono::duration<double> readtime = std::chrono::system_clock::now() - start;
-    
+
     cout << "calibration took " << readtime.count() << " seconds" << endl;
 
     // Save the calibration data to a file
     // Only supported file format is YAML
-    pstereo->save(setpath + "FingerData/fingerdemo-calibration.yaml", gs::Format::YAML);
+    pstereo->save(setpath + "FingerData/fingerdemo-calibration.yaml");
 
     return 0;
 }
@@ -143,11 +142,11 @@ void runCalibrationFromImagePaths()
   const double resolution = 0.0295297735479;
 
    // List of BGA Targets
-   std::vector<std::shared_ptr<gs::CalibrationTarget>> targets;
+   gs::CalibrationTargets targets;
    for (int i = 0; i < 3; ++i) {
 
      auto scanp = fs::canonicalize(setpath + "FingerData/scan00" + std::to_string(i+1));
-	
+
      // Now create BGAs from scans
      auto target = gs::BgaTarget::create( scanp );
 
@@ -158,7 +157,7 @@ void runCalibrationFromImagePaths()
     auto pstereo = gs::CalibratePhotometricStereo(targets, resolution, gs::Version());
 
     // Save calibration file as model.yaml
-    pstereo->save(setpath+"FingerData/testmodel.yaml", gs::Format::YAML);
+    pstereo->save(setpath+"FingerData/testmodel.yaml");
 }
 
 /*
@@ -176,21 +175,21 @@ int runopencvex()
   cv::Mat inimage, matimage;
   inimage = cv::imread(imagefile);
 
-  if (inimage.empty()) {                                   
+  if (inimage.empty()) {
     cout << "could not open " << imagefile << endl;
     return 1;
   }
-  
+
   // First example, using memcpy to copy a cv::Mat BGR to a gelsight BGR image
   // Allocate the gelsight image
   const auto bgr8 = gs::Bgr8(0,0,0);
   gs::ImageBgr8 gscopy(gs::SizeI(inimage.cols, inimage.rows), bgr8);
-  // copy the image and write it out 
+  // copy the image and write it out
   memcpy(gscopy.ptr(0), &inimage.data[0], inimage.cols*inimage.rows*3);
   gs::util::WritePng(memcpyoutfile, gscopy);
 
   // Second example convert cv::Mat to gray image and write it out to a png file
-  cv::cvtColor(inimage, matimage, cv::COLOR_BGR2GRAY); 
+  cv::cvtColor(inimage, matimage, cv::COLOR_BGR2GRAY);
 
   // Third example, brute force copy pixel by pixel
   // Split the cv::Mat image into BGR channels
@@ -209,7 +208,7 @@ int runopencvex()
 
   // gsimage is a floating point image just for example
   // bgrim is the converted cv::Mat BGR image
-  // this is the data we need to create the surface 
+  // this is the data we need to create the surface
   gs::ImageF gsimage(gs::SizeI(xdim,ydim),0.0);
   gs::ImageBgr8 bgrim(gs::SizeI(xdim,ydim), bgr8);
 
@@ -229,7 +228,7 @@ int runopencvex()
 
   cout << "Write output png file" << outfile << endl;
   gs::util::WritePng(outfile, gsimage);
-  
+
   // run the calibration
    auto modelfile = setpath + "FingerData/finger-model.yaml";
    cout << "Loading saved calibration data: " << modelfile << endl;
@@ -265,33 +264,26 @@ int runopencvex()
 
 
 //
-// 
+//
 //
 int main(int argc, char *argv[])
 {
-	
 	//
 	// IMPORTANT: Must call gsSdkInitialize() before using the SDK
 	//
 	try {
 		gsSdkInitializeEx();
-		gs::Version();
 	} catch(std::exception& ex) {
 		std::cerr << "first try catch " << ex.what() << endl;
 	}
-/*
+
+	//gs::Version();
+
 	try {
-
-        // Run photometric stereo algorithm to generate 3D
-        runsavedcalib();
-
+		auto ret = runopencvex();
 	} catch (gs::Exception& e) {
 		std::cerr << "second try catch " << e.what() << " " <<  std::endl;
-		
 	}
-*/
-  auto ret = runopencvex();
-
 
 	return 0;
 }
