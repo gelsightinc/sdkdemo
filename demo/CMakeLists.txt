@@ -1,7 +1,9 @@
-cmake_minimum_required(VERSION 3.2)
-project(demo VERSION 1.0 LANGUAGES CXX C)
+cmake_minimum_required(VERSION 3.8)
+project(demo VERSION 2.0 LANGUAGES CXX C)
 
 add_executable(demo "")
+
+target_compile_features(demo PRIVATE cxx_std_17)
 
 #
 # List all source files and headers here
@@ -18,11 +20,6 @@ find_package(GelSightSdk REQUIRED)
 include_directories(demo ${GelSightSdk_INCLUDE_DIRS})
 target_link_libraries(demo ${GelSightSdk_LIBRARIES})
 
-#
-# Link to libpng
-find_package(PNG REQUIRED)
-target_link_libraries(demo ${PNG_LIBRARY})
-target_link_libraries(demo uuid)
 
 if (UNIX)
 
@@ -37,6 +34,19 @@ target_link_libraries(demo stdc++fs)
 
 endif (UNIX)
 
+
+#
+# Link to opencv
+set(OpenCV_DIR "$ENV{GS_THIRDPARTYDIR}/opencv/lib/cmake/opencv4/")
+find_package(OpenCV REQUIRED)
+if (NOT DEFINED OpenCV_DIR OR NOT IS_DIRECTORY ${OpenCV_DIR})
+   target_link_libraries(demo "$ENV{GS_THIRDPARTYDIR}/opencv/lib")
+   target_include_directories(demo PUBLIC "$ENV{GS_THIRDPARTYDIR}/opencv/include/opencv4/")
+else()
+    target_link_libraries(demo ${OpenCV_LIBRARIES})
+    target_include_directories(demo PUBLIC ${OpenCV_INCLUDE_DIRS})   
+endif()
+message(STATUS "Using opencv includes in ${OpenCV_INCLUDE_DIRS}")
 
 
 

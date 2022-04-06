@@ -45,7 +45,7 @@ int runpstereo(gs::PhotometricStereo *pstereo)
 
 	// Load a scan from the scan file
 	
-	auto scan = gs::LoadScanFromYAML(scanfile, gs::DefaultAnalysisManager());
+	auto scan = gs::LoadScanFromYaml(scanfile);
 
 	// Load images from scan
 	auto images = gs::util::LoadImages(scan->imagePaths());
@@ -109,7 +109,7 @@ int runcalibration()
 {
 
 	// Create list of calibration targets
-    std::vector<std::shared_ptr<gs::CalibrationTarget>> targets;
+    std::vector<std::shared_ptr<gs::ScanTarget>> targets;
 
     // We have 4 scans of the calibration target at different positions
     // we will add them all to the list of calibration targets
@@ -137,7 +137,7 @@ int runcalibration()
 
     // Save the calibration data to a file
     // Only supported file format is YAML
-    pstereo->save(setpath + "demo-calibration.yaml", gs::Format::YAML);
+    pstereo->save(setpath + "demo-calibration.yaml");
 
 	return 0;
 }
@@ -167,7 +167,7 @@ void runCalibrationFromImagePaths()
 	const double resolution = 0.007812500000000002;
 
 	// List of BGA Targets
-	std::vector<std::shared_ptr<gs::CalibrationTarget>> targets;
+	std::vector<std::shared_ptr<gs::ScanTarget>> targets;
 	for (int i = 0; i < 4; ++i) {
 		// Path to scan folder
 		auto scanp = string("../../../testdata/BGA-00") + std::to_string(i+1);
@@ -182,7 +182,7 @@ void runCalibrationFromImagePaths()
     auto pstereo = gs::CalibratePhotometricStereo(targets, resolution, gs::Version());
 
 	// Save calibration file as model.yaml
-	pstereo->save("../../../testdata/testmodel.yaml", gs::Format::YAML);
+	pstereo->save("../../../testdata/testmodel.yaml");
 }
 
 
