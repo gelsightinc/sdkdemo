@@ -18,3 +18,14 @@ This project assumes you have the `GS_SDK` environment variable set to the path
 to your GelSightSdk folder. You also need a valid license for GelSightSdk.
 
  * Use CMake to create the make files
+
+To build and run on linux, you need the following pkgs
+ * sudo apt-get update
+ * sudo apt-get install cmake
+ * sudo apt-get install libpng-dev
+ * sudo apt install libeigen3-dev
+ * sudo apt install libeigen3-dev
+ * sudo apt-get install libgtest-dev
+ * sudo apt-get install libfl-dev
+ * sudo apt install subversion
+ * sudo apt-get install uuid-dev
