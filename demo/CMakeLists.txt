@@ -37,16 +37,17 @@ endif (UNIX)
 
 #
 # Link to opencv
-set(OpenCV_DIR "$ENV{GS_THIRDPARTYDIR}/opencv/lib/cmake/opencv4/")
+
 find_package(OpenCV REQUIRED)
-if (NOT DEFINED OpenCV_DIR OR NOT IS_DIRECTORY ${OpenCV_DIR})
-   target_link_libraries(demo "$ENV{GS_THIRDPARTYDIR}/opencv/lib")
-   target_include_directories(demo PUBLIC "$ENV{GS_THIRDPARTYDIR}/opencv/include/opencv4/")
-else()
-    target_link_libraries(demo ${OpenCV_LIBRARIES})
-    target_include_directories(demo PUBLIC ${OpenCV_INCLUDE_DIRS})   
-endif()
-message(STATUS "Using opencv includes in ${OpenCV_INCLUDE_DIRS}")
+target_link_libraries(demo ${OpenCV_LIBRARIES})
+target_include_directories(demo PUBLIC ${OpenCV_INCLUDES})   
+
+#set(OpenCV_DIR "$ENV{GS_THIRDPARTYDIR}/opencv/lib/cmake/opencv4/")
+#if (NOT DEFINED OpenCV_DIR OR NOT IS_DIRECTORY ${OpenCV_DIR})
+#   target_link_libraries(demo "$ENV{GS_THIRDPARTYDIR}/opencv/lib")
+#   target_include_directories(demo PUBLIC "$ENV{GS_THIRDPARTYDIR}/opencv/include/opencv4/")
+
+message(STATUS "Using opencv includes in ${OpenCV_INCLUDES}")
 
 
 
