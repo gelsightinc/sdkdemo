@@ -47,6 +47,7 @@ for %%C in  (
         for %%T in (
             v141
             v142
+            v143
         ) do (
 
             REM For each platform (short name) P -- aka VS macro $(PlatformShortName)
