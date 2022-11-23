@@ -55,12 +55,19 @@ int runpstereo(gs::PhotometricStereo *pstereo)
 		return 1;
 
 	// Do surface normal reconstruction
+	auto start = std::chrono::system_clock::now();
 	auto nrm = pstereo->nonlinearNormalMap(images, pstereo->roi());
+	std::chrono::duration<double> readtime = std::chrono::system_clock::now() - start;
+
+	cout << "photometric stereo took " << readtime.count() << " seconds" << endl;
 
 	// Integrate normals into heightmap
 	cout << "Integrating surface normals..." << endl;
+	start = std::chrono::system_clock::now();
 	auto poisson = gs::CreateIntegrator(gs::Version());
 	auto heightmap = poisson->integrateNormalMap(nrm, pstereo->resolution());
+	readtime = std::chrono::system_clock::now() - start;
+	cout << "integration took " << readtime.count() << " seconds" << endl;
 
 	// Save surface as TMD
 	string out1 = setpath + "R513-500/output.tmd";
