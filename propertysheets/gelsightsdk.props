@@ -5,8 +5,8 @@
     <SDKDIR>$(GS_SDK)</SDKDIR>
   </PropertyGroup>
   <PropertyGroup>
-    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\$(PlatformToolset)</OutDir>
-    <IntDir>$(Platform)\$(Configuration)\$(PlatformToolset)</IntDir>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\$(PlatformToolset)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\$(PlatformToolset)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
