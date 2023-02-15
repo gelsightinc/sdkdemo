@@ -1,0 +1,64 @@
+images:
+  - image01.png
+  - image02.png
+  - image03.png
+  - image04.png
+  - image05.png
+  - image06.png
+iscalib: false
+calibradius: 0
+calibspacing: 0
+mmperpixel: 0.00706455051071
+calib: C:/Users/kimo/Desktop/HondaDemo/Test20180522/model-test1.yaml
+crop: [0, 0, 0, 0]
+cameratostage: []
+aligned: false
+activeheightmap: coin-001.tmd
+activenormalmap: coin-001_nrm.png
+annotations: 
+  - type: Line
+    name: Line
+    id: 1489989667
+    x1: 851.575378418
+    x2: 963.424621582
+    y1: 1006.25701904
+    y2: 1093.74304199
+routines: 
+  - type: Profile
+    name: Profile
+    avgmethod: 1
+    id: 944125961
+    level: true
+    levelend: 1
+    levelstart: 0
+    numprofiles: 1
+    p1pad: 0
+    p2pad: 0
+    primaryshapeid: 1489989667
+    reintegrate: false
+    width: 0.2
+camera: 
+    autoexposure: false
+    autoframerate: false
+    autogain: false
+    autogamma: false
+    autosharpness: false
+    autoshutter: false
+    camera_name: Ximea
+    cameratype: Ximea
+    format_ix: 0
+    framerate: 50
+    gain: 0
+    gamma: 1
+    mode_ix: 0
+    pixelformat_ix: 0
+    roih: 2056
+    roiw: 2464
+    roix: 0
+    roiy: 0
+    sharpness: 0
+    shutter: 0.603
+device: 
+    devicetype: Mobile
+    lights: []
+    version: 2
