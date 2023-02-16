@@ -147,10 +147,6 @@ int main(int argc, char *argv[])
 		std::cerr << "gsSdkInitializeEx try catch " << ex.what() << std::endl;
 	}
 
-	std::string scanPath("../testdata/HandheldData/japanese-coin-001");
-	std::string calPath("../testdata/HandheldData/model-test1.yaml");
-
-	std::cout << "Input paths = " << scanPath << " " << calPath << std::endl;
 
 	//
 	// DO_HEIGHTMAP 
@@ -160,10 +156,27 @@ int main(int argc, char *argv[])
 	auto DO_HEIGHTMAP(true);
 	if (DO_HEIGHTMAP)
 	{
+		// set the path to the scan data
+
+		std::string scanPath("../testdata/HandheldData/japanese-coin-001");
+
+		// set the path to the calibration data
+		// ********************** NOTE *****************
+		// This is the yaml file, there is also a file name model-test1.png
+		// that needs to be in the same directory
+		// If you look at the example model-test1.yaml , you will see
+		// flatfield: 
+		//		modelfile: model- test1.png
+		// *********************************************
+
+		std::string calYamlFile("../testdata/HandheldData/model-test1.yaml");
+
+		std::cout << "Input paths = " << scanPath << " " << calYamlFile << std::endl;
+
 		try {
 
 			// Run photometric stereo algorithm to generate 3D
-			auto result = runPhotometricStereo(calPath, scanPath);
+			auto result = runPhotometricStereo(calYamlFile, scanPath);
 
 		}
 		catch (gs::Exception& e) {
