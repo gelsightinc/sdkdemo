@@ -13,21 +13,18 @@
 //
 //
 
+#include <string>
+#include <vector>
+#include <iostream>
+#include <fstream>
+#include <chrono>
+
 #include "gsanalysismanager.h"
 #include "pstereo.h"
 #include "imageio.h"
 #include "integrator.h"
 #include "gelsightsdk.h"
 #include "flatfieldmodel.h"
-
-#include <string>
-#include <vector>
-#include <iostream>
-#include <fstream>
-#include <thread>
-#include <chrono>
-#include <memory>
-
 
 /*
  * This function shows how to load a saved calibration and compute 3D for a scan
