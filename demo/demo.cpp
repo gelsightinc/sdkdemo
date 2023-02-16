@@ -47,13 +47,21 @@ int runPhotometricStereo(std::string& calFile, std::string& scanPath)
 
 	} catch (gs::Exception& e) {
 		std::cout << "Exception: " << e.error() << std::endl;
+	} 
+	
+	std::cout << "Loading image paths ..." << std::endl;
+	std::vector<std::string> imagePaths;
+	for (auto i = 1; i <= 6; i++)
+	{
+		auto imagePath = scanPath + "/image0" + std::to_string(i) + ".png";
+		imagePaths.push_back(imagePath);
+		std::cout << imagePath << std::endl;
 	}
 
-	// Load a scan from the scan file
-	std::string scanfile = scanPath + "/scan.yaml";
-	auto scan = gs::LoadScanFromYaml(scanfile);
+	auto scan = gs::CreateScan(imagePaths);
+	scan->setResolution(pstereo->resolution(), gs::Unit::MM);
 
-	std::cout << "Running photometric stereo algorithm on " << scanfile << std::endl;
+	std::cout << "Running photometric stereo algorithm on " << scanPath << std::endl;
 
 	auto flatfield = gs::LoadFlatFieldModel(calFile);
 
