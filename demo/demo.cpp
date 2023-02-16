@@ -12,10 +12,12 @@
 //
 //
 
+#include "gsanalysismanager.h"
+#include "pstereo.h"
+#include "imageio.h"
+#include "integrator.h"
 #include "gelsightsdk.h"
-#include "gsanalysisroutine.h"
-#include "calibration.h"
-#include "geometry.h"
+#include "flatfieldmodel.h"
 
 #include <string>
 #include <vector>
@@ -25,84 +27,62 @@
 #include <chrono>
 #include <memory>
 
-using std::string;
-using std::cout;
-using std::endl;
-using std::vector;
-
-
-// Path to testdata
-string setpath("../testdata/");
-
-/*
- * Run pstereo algorithm on sine wave sample data
- */
-int runpstereo(gs::PhotometricStereo *pstereo)
-{
-	string scanfile = setpath + "R513-500/scan.yaml";
-
-	cout << "Running photometric stereo algorithm on " << scanfile << endl;
-
-	// Load a scan from the scan file
-	
-	auto scan = gs::LoadScanFromYaml(scanfile);
-
-	// Load images from scan
-	auto images = gs::util::LoadImages(scan->imagePaths());
-
-	cout << "Loaded " << images.size() << " images" << endl;
-	if (images.size() == 0)
-		return 1;
-
-	// Do surface normal reconstruction
-	auto start = std::chrono::system_clock::now();
-	auto nrm = pstereo->nonlinearNormalMap(images, pstereo->roi());
-	std::chrono::duration<double> readtime = std::chrono::system_clock::now() - start;
-
-	cout << "photometric stereo took " << readtime.count() << " seconds" << endl;
-
-	// Integrate normals into heightmap
-	cout << "Integrating surface normals..." << endl;
-	start = std::chrono::system_clock::now();
-	auto poisson = gs::CreateIntegrator(gs::Version());
-	auto heightmap = poisson->integrateNormalMap(nrm, pstereo->resolution());
-	readtime = std::chrono::system_clock::now() - start;
-	cout << "integration took " << readtime.count() << " seconds" << endl;
-
-	// Save surface as TMD
-	string out1 = setpath + "R513-500/output.tmd";
-	cout << "Saving heightmap: " << out1 << endl;
-	gs::util::WriteTMD(out1, heightmap, pstereo->resolution(), 0.0, 0.0);
-
-
-	// Save normal map
-	string out2 = setpath + "R513-500/output_nrm.png";
-	cout << "Saving normal map: " << out2 << endl;
-	gs::util::WriteNormalMap(out2, nrm, 16);
-
-	return 0;
-}
-
 
 /*
  * This function shows how to load a saved calibration and compute 3D for a scan
+ * 
+ * @param calFile The path and name of the calibration file ending in .yaml
+ *				  There should also be a .png file with the same name as the .yaml
+ * @param scanPath The path to the scan data
+ * 
  */
-int runsavedcalib()
+int runPhotometricStereo(std::string& calFile, std::string& scanPath)
 {
 
-	auto modelfile = setpath + "model-dome.yaml";
-	cout << "Loading saved calibration data: " << modelfile << endl;
 	// Load PhotometricStereo algorithm from settings file
 	
+	gs::PhotometricStereoPtr pstereo;
 	try {
-		auto pstereo = gs::LoadPhotometricStereo(modelfile);
-
-        // Run pstereo algorithm on a scan
-		runpstereo(pstereo.get());
+		pstereo = gs::LoadPhotometricStereo(calFile);
 
 	} catch (gs::Exception& e) {
-		cout << "Exception: " << e.error() << endl;
+		std::cout << "Exception: " << e.error() << std::endl;
 	}
+
+	// Load a scan from the scan file
+	std::string scanfile = scanPath + "/scan.yaml";
+	auto scan = gs::LoadScanFromYaml(scanfile);
+
+	std::cout << "Running photometric stereo algorithm on " << scanfile << std::endl;
+
+	auto flatfield = gs::LoadFlatFieldModel(calFile);
+
+	if (flatfield != nullptr)
+		flatfield->adjust(scan, DEFAULT_TI);
+
+	const auto ti = DEFAULT_TI;
+
+	std::cout << "Generating the normals ..." << std::endl;
+	gs::NormalMap nrm;
+	try
+	{
+		nrm = pstereo->nonlinearNormalMap(scan->images(), pstereo->roi(), ti);
+	}
+	catch (const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
+
+	auto nrmpath = scanPath + "/output_nrm.png";
+	gs::util::WriteNormalMap(nrmpath, nrm, 16);
+	std::cout << "saved normals to " << nrmpath << std::endl;
+
+	std::cout << "Creating the height map ..." << std::endl;
+	auto poisson = gs::CreateIntegrator(gs::Version());
+	auto HeightMapImage = poisson->integrateNormalMap(nrm, pstereo->resolution(), ti);
+
+	auto fname = scanPath + "/output_scan.tmd";
+	gs::util::WriteTmd(fname, HeightMapImage, pstereo->resolution(), 0.0, 0.0);
 
 	return 0;
 }
@@ -110,91 +90,47 @@ int runsavedcalib()
 
 
 /*
- * This function shows how to calibrate the system from one or more calibration scans
+ * This function shows how to calibrate the system from a set of calibration scans
+ * There are 4 BGA scans and a Flat scan
+ * 
+ * @param calibrationScansPath The toplevel path to the scans using for calibration
  */
-int runcalibration()
+int runCalibration(std::string& calibrationScansPath)
 {
 
 	// Create list of calibration targets
-    std::vector<std::shared_ptr<gs::ScanTarget>> targets;
+    gs::CalibrationTargets targets;
 
     // We have 4 scans of the calibration target at different positions
     // we will add them all to the list of calibration targets
     for (int i = 0; i < 4; ++i) {
-        auto scanfolder = fs::canonicalize(setpath + "BGA-00" + std::to_string(i+1));
+        auto scanfolder = fs::canonicalize(calibrationScansPath + "BGA-00" + std::to_string(i+1));
         auto target     = gs::BgaTarget::create(scanfolder);
         targets.push_back(target);
     }
 
     // It's recommended, but not required, to add a scan of a flat plate to the 
     // list of calibration targets
-	auto flatp = fs::canonicalize(setpath + "Flat-001");
+	auto flatp = fs::canonicalize(calibrationScansPath + "Flat-001");
     auto flat = gs::FlatTarget::create(flatp);
-    targets.push_back(flat);
+	targets.push_back(flat);
 
 	auto start = std::chrono::system_clock::now();
 	
-	cout << "Running calibration algorithm..." << endl;
+	std::cout << "Running calibration algorithm..." << std::endl;
 
 	auto pstereo = gs::CalibratePhotometricStereo(targets, gs::Version());
 
 	std::chrono::duration<double> readtime = std::chrono::system_clock::now() - start;
     
-	cout << "calibration took " << readtime.count() << " seconds" << endl;
+	std::cout << "calibration took " << readtime.count() << " seconds" << std::endl;
 
     // Save the calibration data to a file
     // Only supported file format is YAML
-    pstereo->save(setpath + "demo-calibration.yaml");
+    pstereo->save(calibrationScansPath + "/demo-calibration.yaml");
 
 	return 0;
 }
-
-
-/*
- * This function is meant to simulate a scan that has been saved to disk
- */
-vector<string> doscan(const string& foldername)
-{
-	string calibdir = setpath + "calib";
-	
-	vector<string> paths;
-	for (int i = 0; i < 6; ++i) {
-		paths.push_back(calibdir + "/image0" + std::to_string(i+1) + ".png");
-	}
-	return paths;
-}
-
-/*
- * This function shows how to calibrate the system from folders of BGA scans
- */
-void runCalibrationFromImagePaths()
-{
-//	const double pitchmm  = 0.4;
-//	const double radiusmm = 0.15625;
-	const double resolution = 0.007812500000000002;
-
-	// List of BGA Targets
-	std::vector<std::shared_ptr<gs::ScanTarget>> targets;
-	for (int i = 0; i < 4; ++i) {
-		// Path to scan folder
-		auto scanp = string("../../../testdata/BGA-00") + std::to_string(i+1);
-
-		// Now create BGAs from scans
-		auto target = gs::BgaTarget::create( scanp );
-
-		targets.push_back(target);
-	}
-
-	cout << "Run calibration algorithm..." << endl;
-    auto pstereo = gs::CalibratePhotometricStereo(targets, resolution, gs::Version());
-
-	// Save calibration file as model.yaml
-	pstereo->save("../../../testdata/testmodel.yaml");
-}
-
-
-
-
 
 
 //
@@ -202,28 +138,56 @@ void runCalibrationFromImagePaths()
 //
 int main(int argc, char *argv[])
 {
-	
 	//
 	// IMPORTANT: Must call gsSdkInitialize() before using the SDK
 	//
 	try {
 		gsSdkInitializeEx();
 	} catch(std::exception& ex) {
-		std::cerr << "first try catch " << ex.what() << endl;
+		std::cerr << "gsSdkInitializeEx try catch " << ex.what() << std::endl;
 	}
-	
 
-	try {
+	std::string scanPath("../testdata/HandheldData/japanese-coin-001");
+	std::string calPath("../testdata/HandheldData/model-test1.yaml");
 
-        // Run calibration algorithm on BGA scans
-        runcalibration();
+	std::cout << "Input paths = " << scanPath << " " << calPath << std::endl;
 
-        // Run photometric stereo algorithm to generate 3D
-        runsavedcalib();
+	//
+	// DO_HEIGHTMAP 
+	// This is an example of how to create the 3D data from a scan
+	// You need the scan and the calibration data used to capture the scan
+	//
+	auto DO_HEIGHTMAP(true);
+	if (DO_HEIGHTMAP)
+	{
+		try {
 
-	} catch (gs::Exception& e) {
-		std::cerr << "second try catch " << e.what() << " " <<  std::endl;
-		
+			// Run photometric stereo algorithm to generate 3D
+			auto result = runPhotometricStereo(calPath, scanPath);
+
+		}
+		catch (gs::Exception& e) {
+			std::cerr << "runPhotometricStereo try catch " << e.what() << " " << std::endl;
+
+		}
+	}
+
+	// DO_CALIBRATE
+	// This is an example of how to run calibration
+	//
+	auto DO_CALIBRATE(true);
+	if (DO_CALIBRATE)
+	{
+		std::string calibrationScansPath("../testdata/OEMData/");
+		try {
+
+			auto result = runCalibration(calibrationScansPath);
+
+		}
+		catch (gs::Exception& e) {
+			std::cerr << "runCalibration try catch " << e.what() << " " << std::endl;
+
+		}
 	}
 	
 	return 0;
