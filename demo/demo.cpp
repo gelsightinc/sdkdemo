@@ -1,14 +1,15 @@
-// Demo.cpp
+// demo.cpp
 //
 // This file contains functions that demonstrate the basic functionality of GelSightSDK
 // 
 // Demo functions:
 //     
-//     runcalibration         Calibrate the system from one or more BGA scans
-//     runsavedcalib          Load a saved calibration file and run the 3D algorithms
+//     runCalibration         Calibrate the system from BGA and Flat scans
+//     runPhotometricStereo   Load a saved calibration file and run 3D reconstruction from scan images
 // 
-// Kimo Johnson
-// Last Revision: 2/5/2017
+// Author: Kimo Johnson
+// Initial Revision: 2/5/2017
+// Latest Revision: 2/16/2023
 //
 //
 
