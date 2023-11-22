@@ -4,12 +4,13 @@
 // 
 // Demo functions:
 //     
-//     runCalibration         Calibrate the system from BGA and Flat scans
 //     runPhotometricStereo   Load a saved calibration file and run 3D reconstruction from scan images
+//     runCalibration         Calibrate the system from BGA and Flat scans
+//     runAlignment           Run scan alignment
 // 
 // Author: Kimo Johnson
 // Initial Revision: 2/5/2017
-// Latest Revision: 2/16/2023
+// Latest Revision: 7/13/2023
 //
 //
 
@@ -34,7 +35,7 @@
  * @param scanPath The path to the scan data
  * 
  */
-int runPhotometricStereo(std::string& calFile, std::string& scanPath)
+int runPhotometricStereo(const std::string& calFile, const std::string& scanPath)
 {
 
 	// Load PhotometricStereo algorithm from settings file
@@ -101,7 +102,7 @@ int runPhotometricStereo(std::string& calFile, std::string& scanPath)
  * 
  * @param calibrationScansPath The toplevel path to the scans using for calibration
  */
-int runCalibration(std::string& calibrationScansPath)
+int runCalibration(const std::string& calibrationScansPath)
 {
 
 	// Create list of calibration targets
@@ -139,11 +140,37 @@ int runCalibration(std::string& calibrationScansPath)
 }
 
 
+/*
+ * This function shows how to run scan alignment on scans that
+ * have the all-LED image
+ * 
+ * @param scansPath The path to the scan being aligned
+ */
+int runAlignment(const std::string& scanPath)
+{
+	// Load scan
+	auto scan = gs::LoadScanFromYaml(scanPath);
+
+	// Get taskinfo
+	auto taskinfo = DEFAULT_TI;
+
+	// Run alignment
+	scan->advancedAlignImages(taskinfo);
+
+	return 0;
+}
+
+
 //
 // 
 //
 int main(int argc, char *argv[])
 {
+	// Demos to run
+	auto DO_HEIGHTMAP(true);
+	auto DO_CALIBRATE(false);
+	auto DO_ALIGNMENT(false);
+
 	//
 	// IMPORTANT: Must call gsSdkInitialize() before using the SDK
 	//
@@ -159,7 +186,6 @@ int main(int argc, char *argv[])
 	// This is an example of how to create the 3D data from a scan
 	// You need the scan and the calibration data used to capture the scan
 	//
-	auto DO_HEIGHTMAP(true);
 	if (DO_HEIGHTMAP)
 	{
 		// set the path to the scan data
@@ -194,7 +220,6 @@ int main(int argc, char *argv[])
 	// DO_CALIBRATE
 	// This is an example of how to run calibration
 	//
-	auto DO_CALIBRATE(true);
 	if (DO_CALIBRATE)
 	{
 		std::string calibrationScansPath("../testdata/OEMData/");
@@ -204,11 +229,29 @@ int main(int argc, char *argv[])
 
 		}
 		catch (gs::Exception& e) {
-			std::cerr << "runCalibration try catch " << e.what() << " " << std::endl;
+			std::cerr << "runCalibration threw exception " << e.what() << " " << std::endl;
 
 		}
 	}
-	
+
+	// DO_ALIGNMENT
+	// This is an example of how to run scan alignment on scans with an all-LED image
+	//
+	if (DO_ALIGNMENT)
+	{
+		// set the path to the scan data
+		std::string scanPath("../testdata/AlignData/sandpaper");
+		try {
+			auto result = runAlignment(scanPath);
+
+		}
+		catch (gs::Exception& e) {
+			std::cerr << "runAlignment threw exception " << e.what() << " " << std::endl;
+		}
+
+
+	}
+
 	return 0;
 }
 
